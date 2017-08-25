@@ -1,0 +1,20 @@
+node{
+    stage('get clone'){
+    git url: 'https://github.com/bxf12315/logback-elasticsearch-appender.git'
+    }
+
+    stage('mvn test'){
+          echo "ftest" 
+    }
+
+    stage('mvn build'){
+    
+     echo "ftest" 
+    }
+
+    stage('deploy'){
+       
+        echo "deploy ......" 
+    }
+}
+
