@@ -1,0 +1,36 @@
+@Library('pipeline-library')
+@Library('indy-pipeline-library')
+import politie.jenkins.*
+import org.commonjava.indy.jenkins.pipeline.git.*
+
+def gitOperation = new GitOperation()
+def builder = new JenkinsPipelineSteps()
+builder.initialize()
+
+node{
+   node('nos-indy-release-node-1'){
+    git url: 'https://github.com/bxf12315/logback-elasticsearch-appender.git'
+    }
+
+    stage('mvn test'){
+          def ss = builder.getCommitId()
+
+          echo ss
+    }
+
+    node('nos-indy-release-node-1'){
+        
+     sh 'cd '
+     sh '''mvn clean install -DskipTests'''
+    }
+ node('nos-indy-release-node-1'){
+    stage('deploy'){
+      sh('git config -l')
+      sh('id')
+     // gitOperation.createTag("1.9.3","test")
+      gitOperation.pushTag("1.9.3","origin")
+        echo "deploy ......" 
+    }
+ }
+}
+
